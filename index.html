@@ -7,17 +7,17 @@
 <meta name="description" content="AI Engineer building multi-agent systems, LLM orchestration, and production AI tooling.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0e0a;
-    --bg-raised: #0e130e;
-    --fg: #d4d4c8;
-    --accent: #5fb87d;
-    --accent-dim: #3d7a52;
-    --dim: #6b6b63;
-    --border: #1f261f;
-    --error: #c97064;
+    --bg: #fafaf9;
+    --bg-card: #ffffff;
+    --fg: #18181b;
+    --accent: #6366f1;
+    --accent-deep: #4f46e5;
+    --accent-soft: #eef2ff;
+    --dim: #71717a;
+    --border: #e4e4e7;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,258 +27,184 @@
   body {
     background: var(--bg);
     color: var(--fg);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 15px;
-    line-height: 1.7;
-    padding: 24px 16px 80px;
-    min-height: 100vh;
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
 
-  @media (min-width: 640px) {
-    body { padding: 48px 24px 100px; }
-  }
+  .mono { font-family: 'JetBrains Mono', monospace; }
 
   .wrap {
     max-width: 720px;
     margin: 0 auto;
+    padding: 56px 20px 80px;
   }
 
-  .term {
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    background: var(--bg-raised);
+  @media (min-width: 640px) {
+    .wrap { padding: 88px 24px 100px; }
+  }
+
+  .hero { text-align: center; margin-bottom: 48px; }
+
+  .eyebrow {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    background: var(--accent-soft);
+    padding: 5px 12px;
+    border-radius: 100px;
     margin-bottom: 20px;
-    overflow: hidden;
   }
 
-  .term-bar {
+  .hero-name { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; color: var(--fg); }
+  @media (min-width: 640px) { .hero-name { font-size: 38px; } }
+
+  .hero-role { font-size: 15px; color: var(--dim); margin-top: 10px; font-weight: 500; }
+  @media (min-width: 640px) { .hero-role { font-size: 16px; } }
+
+  .search-box {
+    margin-top: 32px;
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--border);
-    background: #0c110c;
+    gap: 10px;
+    background: var(--bg-card);
+    border: 1.5px solid var(--border);
+    border-radius: 100px;
+    padding: 14px 20px;
+    box-shadow: 0 1px 2px rgba(24,24,27,0.04), 0 8px 24px rgba(24,24,27,0.04);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
 
-  .dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--border);
+  .search-box:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 1px 2px rgba(99,102,241,0.06), 0 8px 24px rgba(99,102,241,0.12);
   }
 
-  .term-title {
-    margin-left: 8px;
+  .search-icon { flex-shrink: 0; color: var(--dim); }
+
+  .search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 14.5px;
+    color: var(--fg);
+  }
+
+  .search-input::placeholder { color: #a1a1aa; }
+
+  .search-note { margin-top: 12px; font-size: 12px; color: var(--dim); }
+  .search-note .arrow { display: inline-block; animation: bob 1.6s ease-in-out infinite; }
+
+  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+  @media (prefers-reduced-motion: reduce) { .search-note .arrow { animation: none; } }
+
+  .section { margin-bottom: 36px; }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--dim);
-    font-size: 12px;
-    letter-spacing: 0.02em;
+    margin-bottom: 14px;
   }
 
-  .term-body {
-    padding: 18px 16px 20px;
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
   }
+  @media (min-width: 640px) { .card { padding: 24px; } }
 
-  @media (min-width: 640px) {
-    .term-body { padding: 22px 22px 24px; }
-  }
+  .about-text { font-size: 14.5px; color: #3f3f46; line-height: 1.75; }
 
-  .prompt {
-    color: var(--accent);
-  }
+  .entry { padding: 16px 0; border-bottom: 1px solid var(--border); }
+  .entry:last-child { border-bottom: none; padding-bottom: 0; }
+  .entry:first-child { padding-top: 0; }
 
-  .cmd {
-    color: var(--fg);
-  }
-
-  .out {
-    color: var(--fg);
-    margin-top: 10px;
-  }
-
-  .dimtext { color: var(--dim); }
-  .accenttext { color: var(--accent); font-weight: 600; }
-
-  .hero-name {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--fg);
-    letter-spacing: -0.01em;
-  }
-
-  @media (min-width: 640px) {
-    .hero-name { font-size: 26px; }
-  }
-
-  .hero-role {
-    color: var(--accent);
-    margin-top: 6px;
-    font-size: 14px;
-  }
-
-  .hero-line {
-    color: var(--dim);
-    margin-top: 14px;
-    font-size: 13.5px;
-  }
-
-  .cursor {
-    display: inline-block;
-    width: 8px;
-    height: 16px;
-    background: var(--accent);
-    margin-left: 2px;
-    vertical-align: text-bottom;
-    animation: blink 1s step-end infinite;
-  }
-
-  @keyframes blink {
-    50% { opacity: 0; }
-  }
-
-  .section {
-    opacity: 0;
-    transform: translateY(8px);
-    animation: rise 0.5s ease forwards;
-  }
-
-  @keyframes rise {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .delay-1 { animation-delay: 0.15s; }
-  .delay-2 { animation-delay: 0.35s; }
-  .delay-3 { animation-delay: 0.55s; }
-  .delay-4 { animation-delay: 0.75s; }
-  .delay-5 { animation-delay: 0.95s; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .section { animation: none; opacity: 1; transform: none; }
-    .cursor { animation: none; }
-  }
-
-  .entry {
-    margin-bottom: 18px;
-    padding-left: 14px;
-    border-left: 2px solid var(--border);
-  }
-
-  .entry:last-child { margin-bottom: 0; }
-
-  .entry-title {
-    color: var(--fg);
-    font-weight: 600;
-    font-size: 14px;
-  }
-
-  .entry-meta {
-    color: var(--dim);
-    font-size: 12.5px;
-    margin-top: 2px;
-  }
-
-  .entry-desc {
-    color: var(--fg);
-    font-size: 13.5px;
-    margin-top: 8px;
-    opacity: 0.92;
-  }
-
+  .entry-title { font-size: 14.5px; font-weight: 600; color: var(--fg); }
+  .entry-meta { font-size: 12.5px; color: var(--dim); margin-top: 2px; }
+  .entry-desc { font-size: 13.5px; color: #3f3f46; margin-top: 10px; line-height: 1.65; }
   .entry-desc + .entry-desc { margin-top: 6px; }
 
   .proj {
+    background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 14px 16px;
+    border-radius: 12px;
+    padding: 18px 20px;
     margin-bottom: 12px;
-    transition: border-color 0.15s ease;
+    transition: border-color 0.15s ease, transform 0.15s ease;
   }
-
   .proj:last-child { margin-bottom: 0; }
+  .proj:hover { border-color: var(--accent); transform: translateY(-1px); }
 
-  .proj:hover { border-color: var(--accent-dim); }
+  .proj-top { display: flex; justify-content: space-between; align-items: start; gap: 12px; flex-wrap: wrap; }
 
-  .proj-name {
-    color: var(--accent);
-    font-weight: 600;
-    font-size: 14px;
-  }
-
-  .proj-name a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .proj-name a:hover { text-decoration: underline; }
-
-  .proj-stack {
-    color: var(--dim);
-    font-size: 12px;
-    margin-top: 4px;
-  }
-
-  .proj-desc {
-    color: var(--fg);
-    font-size: 13.5px;
-    margin-top: 8px;
-    opacity: 0.92;
-  }
+  .proj-name { font-size: 15px; font-weight: 700; color: var(--fg); }
+  .proj-name a { color: inherit; text-decoration: none; }
+  .proj-name a:hover { color: var(--accent-deep); }
 
   .proj-link {
-    display: inline-block;
-    margin-top: 10px;
-    color: var(--accent);
-    font-size: 12.5px;
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--accent-deep);
     text-decoration: none;
-    border-bottom: 1px solid var(--accent-dim);
+    white-space: nowrap;
   }
+  .proj-link:hover { text-decoration: underline; }
 
-  .proj-link:hover { border-color: var(--accent); }
+  .proj-stack { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--dim); margin-top: 6px; }
+  .proj-desc { font-size: 13.5px; color: #3f3f46; margin-top: 10px; line-height: 1.65; }
 
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 10px;
-  }
-
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
   .tag {
-    font-size: 11px;
-    color: var(--dim);
-    border: 1px solid var(--border);
-    padding: 2px 8px;
-    border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--accent-deep);
+    background: var(--accent-soft);
+    padding: 3px 9px;
+    border-radius: 100px;
   }
 
-  .contact-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-top: 4px;
-  }
+  .contact-row { display: flex; flex-wrap: wrap; gap: 10px; }
 
   .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     color: var(--fg);
     text-decoration: none;
     font-size: 13.5px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 1px;
-    transition: border-color 0.15s ease, color 0.15s ease;
+    font-weight: 500;
+    padding: 9px 16px;
+    border-radius: 100px;
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
   }
 
   .contact-link:hover {
-    color: var(--accent);
     border-color: var(--accent);
+    color: var(--accent-deep);
+    background: var(--accent-soft);
   }
 
   .footer {
     text-align: center;
-    color: var(--dim);
-    font-size: 11.5px;
-    margin-top: 32px;
-    opacity: 0.7;
+    font-family: 'JetBrains Mono', monospace;
+    color: #a1a1aa;
+    font-size: 11px;
+    margin-top: 56px;
   }
 
-  a:focus-visible, button:focus-visible {
+  a:focus-visible, input:focus-visible, button:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
@@ -287,29 +213,22 @@
 <body>
 <div class="wrap">
 
-  <div class="term section">
-    <div class="term-bar">
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-      <span class="term-title">anand@portfolio:~</span>
+  <div class="hero">
+    <span class="eyebrow mono">AI Engineer</span>
+    <div class="hero-name">Anand Buruganahalli Rajanna</div>
+    <div class="hero-role">Multi-Agent Systems · LLM Orchestration · RAG · Seattle, WA</div>
+
+    <div class="search-box">
+      <svg class="search-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="search-input" type="text" placeholder="Ask about Anand's work — e.g. &quot;what has he built with RAG?&quot;" disabled>
     </div>
-    <div class="term-body">
-      <div><span class="prompt">$</span> <span class="cmd">whoami</span></div>
-      <div class="out">
-        <div class="hero-name">Anand Buruganahalli Rajanna</div>
-        <div class="hero-role">AI Engineer — Multi-Agent Systems · LLM Orchestration · RAG</div>
-        <div class="hero-line">Seattle, WA · Building agentic systems that ship, not just demo<span class="cursor"></span></div>
-      </div>
-    </div>
+    <div class="search-note"><span class="arrow">↓</span> AI-powered search coming soon — for now, scroll for the answer</div>
   </div>
 
-  <div class="term section delay-1">
-    <div class="term-bar">
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-      <span class="term-title">cat about.md</span>
-    </div>
-    <div class="term-body">
-      <div><span class="prompt">$</span> <span class="cmd">cat about.md</span></div>
-      <div class="out" style="font-size: 13.5px;">
+  <div class="section">
+    <div class="section-label mono">about</div>
+    <div class="card">
+      <div class="about-text">
         I build AI systems that work in production, not just in demos.
         At Amazon, I architected a multi-agent orchestration platform on
         Amazon Bedrock, now used by 6+ engineering teams. Outside of
@@ -322,87 +241,68 @@
     </div>
   </div>
 
-  <div class="term section delay-2">
-    <div class="term-bar">
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-      <span class="term-title">cat experience.log</span>
+  <div class="section">
+    <div class="section-label mono">experience</div>
+    <div class="card">
+
+      <div class="entry">
+        <div class="entry-title">Software Development Engineer — Amazon</div>
+        <div class="entry-meta">Seattle, WA · Aug 2022 — Present</div>
+        <div class="entry-desc">Architected a production multi-agent AI system on Amazon Bedrock — a central orchestration agent routing natural language queries across specialized sub-agents. Adopted by 6+ engineering teams, cutting mean debugging time by 30+ min per incident.</div>
+        <div class="entry-desc">Owned large-scale logistics systems across 300+ fulfillment centers, including a serverless failure-analysis pipeline that improved time-to-diagnosis by 70%.</div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-title">Senior Software Engineer — Capgemini India</div>
+        <div class="entry-meta">Bengaluru, India · Aug 2018 — May 2020</div>
+        <div class="entry-desc">Led a cross-functional team of 10 engineers delivering enterprise solutions; built automation reducing report generation time by 50%.</div>
+      </div>
+
     </div>
-    <div class="term-body">
-      <div><span class="prompt">$</span> <span class="cmd">cat experience.log</span></div>
-      <div class="out">
+  </div>
 
-        <div class="entry">
-          <div class="entry-title">Software Development Engineer — Amazon</div>
-          <div class="entry-meta">Seattle, WA · Aug 2022 — Present</div>
-          <div class="entry-desc">Architected a production multi-agent AI system on Amazon Bedrock — a central orchestration agent routing natural language queries across specialized sub-agents. Adopted by 6+ engineering teams, cutting mean debugging time by 30+ min per incident.</div>
-          <div class="entry-desc">Owned large-scale logistics systems across 300+ fulfillment centers, including a serverless failure-analysis pipeline that improved time-to-diagnosis by 70%.</div>
-        </div>
+  <div class="section">
+    <div class="section-label mono">projects</div>
 
-        <div class="entry">
-          <div class="entry-title">Senior Software Engineer — Capgemini India</div>
-          <div class="entry-meta">Bengaluru, India · Aug 2018 — May 2020</div>
-          <div class="entry-desc">Led a cross-functional team of 10 engineers delivering enterprise solutions; built automation reducing report generation time by 50%.</div>
-        </div>
+    <div class="proj">
+      <div class="proj-top">
+        <div class="proj-name"><a href="https://github.com/Anandbr/jobpilot" target="_blank" rel="noopener">JobPilot</a></div>
+        <a class="proj-link mono" href="https://github.com/Anandbr/jobpilot" target="_blank" rel="noopener">view source →</a>
+      </div>
+      <div class="proj-stack">Python · Claude API · SQLite · Telegram Bot API · Browser Automation · Ollama</div>
+      <div class="proj-desc">An autonomous agent that monitors job postings, scores fit via LLM reasoning, tailors resumes per role, and executes browser-based applications with human-in-the-loop approval gates at every step that matters. Thin harness, fat skills — deterministic orchestration logic stays in Python, judgment calls go to the LLM.</div>
+      <div class="tags">
+        <span class="tag">agentic</span>
+        <span class="tag">guardrails</span>
+        <span class="tag">human-in-the-loop</span>
+      </div>
+    </div>
 
+    <div class="proj">
+      <div class="proj-top">
+        <div class="proj-name"><a href="https://github.com/Anandbr/job-match-ai" target="_blank" rel="noopener">job-match-ai</a></div>
+        <a class="proj-link mono" href="https://github.com/Anandbr/job-match-ai" target="_blank" rel="noopener">view source →</a>
+      </div>
+      <div class="proj-stack">Python · ChromaDB · Sentence-Transformers · FastAPI</div>
+      <div class="proj-desc">An end-to-end RAG pipeline embedding job descriptions and candidate profiles, storing in ChromaDB, retrieving best-fit matches via semantic similarity, exposed as a REST API with basic drift monitoring.</div>
+      <div class="tags">
+        <span class="tag">RAG</span>
+        <span class="tag">embeddings</span>
+        <span class="tag">vector-search</span>
       </div>
     </div>
   </div>
 
-  <div class="term section delay-3">
-    <div class="term-bar">
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-      <span class="term-title">ls -la projects/</span>
-    </div>
-    <div class="term-body">
-      <div><span class="prompt">$</span> <span class="cmd">ls -la projects/</span></div>
-      <div class="out">
-
-        <div class="proj">
-          <div class="proj-name"><a href="https://github.com/Anandbr/jobpilot" target="_blank" rel="noopener">JobPilot</a></div>
-          <div class="proj-stack">Python · Claude API · SQLite · Telegram Bot API · Browser Automation · Ollama</div>
-          <div class="proj-desc">An autonomous agent that monitors job postings, scores fit via LLM reasoning, tailors resumes per role, and executes browser-based applications with human-in-the-loop approval gates at every step that matters. Thin harness, fat skills — deterministic orchestration logic stays in Python, judgment calls go to the LLM.</div>
-          <div class="tags">
-            <span class="tag">agentic</span>
-            <span class="tag">guardrails</span>
-            <span class="tag">human-in-the-loop</span>
-          </div>
-          <a class="proj-link" href="https://github.com/Anandbr/jobpilot" target="_blank" rel="noopener">view source →</a>
-        </div>
-
-        <div class="proj">
-          <div class="proj-name"><a href="https://github.com/Anandbr/job-match-ai" target="_blank" rel="noopener">job-match-ai</a></div>
-          <div class="proj-stack">Python · ChromaDB · Sentence-Transformers · FastAPI</div>
-          <div class="proj-desc">An end-to-end RAG pipeline embedding job descriptions and candidate profiles, storing in ChromaDB, retrieving best-fit matches via semantic similarity, exposed as a REST API with basic drift monitoring.</div>
-          <div class="tags">
-            <span class="tag">RAG</span>
-            <span class="tag">embeddings</span>
-            <span class="tag">vector-search</span>
-          </div>
-          <a class="proj-link" href="https://github.com/Anandbr/job-match-ai" target="_blank" rel="noopener">view source →</a>
-        </div>
-
-      </div>
+  <div class="section">
+    <div class="section-label mono">contact</div>
+    <div class="contact-row">
+      <a class="contact-link" href="mailto:buruganahallirajan.a@gmail.com">Email</a>
+      <a class="contact-link" href="https://linkedin.com/in/anandbrajanna" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="contact-link" href="https://github.com/Anandbr" target="_blank" rel="noopener">GitHub</a>
     </div>
   </div>
 
-  <div class="term section delay-4">
-    <div class="term-bar">
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-      <span class="term-title">cat contact.md</span>
-    </div>
-    <div class="term-body">
-      <div><span class="prompt">$</span> <span class="cmd">cat contact.md</span></div>
-      <div class="out">
-        <div class="contact-row">
-          <a class="contact-link" href="mailto:buruganahallirajan.a@gmail.com">email</a>
-          <a class="contact-link" href="https://linkedin.com/in/anandbrajanna" target="_blank" rel="noopener">linkedin</a>
-          <a class="contact-link" href="https://github.com/Anandbr" target="_blank" rel="noopener">github</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer section delay-5">built &amp; deployed by the person it describes</div>
+  <div class="footer">built &amp; deployed by the person it describes</div>
 
 </div>
 </body>
